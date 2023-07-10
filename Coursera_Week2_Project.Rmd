@@ -1,0 +1,51 @@
+---
+title: "Developing Data Products"
+author: "David Arcos"
+date: "2023-07-10"
+output:
+  ioslides_presentation: default
+  beamer_presentation: default
+subtitle: "Course Project - Week 2"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# Default option to not include the code
+library(leaflet)
+library(rmarkdown)
+```
+
+## R Markdown and Leaflet
+
+```{r, include=TRUE, comment="", warning=FALSE, echo=TRUE}
+print(paste0("This document was created on the date ", 
+             as.character(Sys.Date())))
+```
+For **Week 2 Course Project**, a web page must be created by using R Markdown and should feature a map created with `Leaflet`.
+
+- The map features the home town where this document was created, including details on the main cities of the rest of the country.
+
+## Leaflet Map 
+### Ecuador
+
+```{r, echo=FALSE}
+library(leaflet)
+cities <- data.frame(
+  City = c("Quito", "Guayaquil", "Cuenca"),
+  Lat = c(-0.229498, -2.170997, -2.897303),
+  Lon = c(-78.524948, -79.922359, -79.003273),
+  Pop = c(1833105, 2275000, 329928)
+)
+
+# Crear el mapa de Ecuador utilizando leaflet
+map_ecuador <- leaflet() %>%
+  addTiles() %>%
+  setView(lng = -78.524948, lat = -1.831239, zoom = 7) %>%
+  addMarkers(data = cities, 
+             lng = ~Lon, lat = ~Lat, 
+             label = ~paste(City, ": ", Pop, " hab."))
+
+# Mostrar el mapa
+map_ecuador
+
+``` 
