@@ -1,0 +1,54 @@
+---
+title: "Developing Data Products"
+author: "David Arcos"
+date: "2023-07-10"
+output:
+  ioslides_presentation: default
+  beamer_presentation: default
+subtitle: "Course Project - Week 3"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# Default option to not include the code
+library(plotly)
+library(rmarkdown)
+```
+
+## R Markdown and Plotly
+
+For **Week 3 Course Project**, create a web page presentation using R Markdown that features a plot created with `Plotly`. Host your webpage on either GitHub Pages, RPubs, or NeoCities. Your webpage must contain the date that you created the document, and it must contain a plot created with Plotly. 
+
+```{r, include=TRUE, comment="", warning=FALSE, echo=TRUE}
+print(paste0("This document was created on the date ", 
+             as.character(Sys.Date())))
+```
+
+
+## MTCARS dataset
+
+The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). This data frame consists of 32 observations on 11 (numeric) variables.
+
+For example, one can plot the relationship between the weight of the car (`wt`) versus the miles per gallon (`mpg`), where you can group some of these relations by the number of cylinders (`cyl`), or by the number of horsepower (`hp`)
+
+## Plotly plot
+```{r, echo=FALSE}
+data(mtcars)
+plot <- plot_ly(data = mtcars, x = ~wt, y = ~mpg, type = "scatter", mode = "markers",
+                color = ~as.factor(cyl),
+                colors = c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+                           "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"),
+                text = ~paste("Car:", rownames(mtcars), "<br> Cylinders:", cyl),
+                hoverinfo = "text") %>%
+  layout(title = "Relation between Weight & MPG",
+         xaxis = list(title = "Weight"),
+         yaxis = list(title = "MPG"),
+         showlegend = TRUE)
+
+# Mostrar el gráfico
+plot
+``` 
+
+## Results
+
+As one can see, there is a clear negative relationship between the weight of a car and its performance, measured by the miles per gallon a car can travel, which makes sense because when a car is heavier it will need more power to move (i.e. it will need more gas, therefore more gas will be consumed). Similarly, one can see that heavier cars will likely have more cylinders, which will impact also in the performance of the car. 
